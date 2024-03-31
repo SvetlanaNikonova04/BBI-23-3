@@ -1,0 +1,58 @@
+﻿using System;
+struct Struct1
+{
+    public string famile;
+    public double[] x;
+    public double sred;
+    public Struct1(string famile1, double[] x1)
+    {
+        sred = 0;
+        famile = famile1;
+        x = x1;
+        for (int i = 0; i < 4; i++)
+            sred += x[i];
+        sred /= 4;// sred = sred/4
+    }
+}
+class Program
+{
+    static void Main(string[] args)
+    {
+        Struct1[] cl = new Struct1[3];
+        cl[0] = new Struct1("Иванов",
+        new double[] { 3.0, 5.0, 2.0, 3.0 });
+        cl[1] = new Struct1("Петров",
+        new double[] { 5.0, 4.0, 5.0, 3.0 });
+        cl[2] = new Struct1("Сидоров",
+        new double[] { 5.0, 4.0, 5.0, 5.0 });
+        for (int i = 0; i < cl.Length; i++)
+            Console.WriteLine("Фамилия {0}\t Средний балл {1,4:f2}", cl[i].famile, cl[i].sred);
+        for (int i = 0; i < cl.Length - 1; i++)
+        {
+            double amax = cl[i].sred;
+            int imax = i;
+            for (int j = i + 1; j < cl.Length; j++)
+            {
+                if (cl[j].sred > amax)
+                {
+                    amax = cl[j].sred;
+                    imax = j;
+
+                }
+
+            }
+            Struct1 temp;
+            temp = cl[imax];
+            cl[imax] = cl[i];
+            cl[i] = temp;
+
+        }
+        Console.WriteLine();
+        for (int i = 0; i < cl.Length; i++)
+        {
+            if (cl[i].sred >= 4)
+                Console.WriteLine("Фамилия {0}\t " + "Средний балл {1,4:f2}", cl[i].famile, cl[i].sred);
+
+        }
+    }
+}
