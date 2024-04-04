@@ -1,50 +1,58 @@
-   using System;
-using System.Collections.Generic;
-
-struct Student
+﻿using System;
+struct Struct1
 {
-    public string Name;
-    public int Exam1;
-    public int Exam2;
-    public int Exam3;
-    public int Exam4;
-    public double AverageGrade;
+    public string famile;
+    public double[] x;
+    public double sred;
+    public Struct1(string famile1, double[] x1)
+    {
+        sred = 0;
+        famile = famile1;
+        x = x1;
+        for (int i = 0; i < 4; i++)
+            sred += x[i];
+        sred /= 4;// sred = sred/4
+    }
 }
-
 class Program
 {
-    static void Main()
+    static void Main(string[] args)
     {
-        Student[] students = new Student[5]
+        Struct1[] cl = new Struct1[3];
+        cl[0] = new Struct1("Иванов",
+        new double[] { 3.0, 5.0, 2.0, 3.0 });
+        cl[1] = new Struct1("Петров",
+        new double[] { 5.0, 4.0, 5.0, 3.0 });
+        cl[2] = new Struct1("Сидоров",
+        new double[] { 5.0, 4.0, 5.0, 5.0 });
+        for (int i = 0; i < cl.Length; i++)
+            Console.WriteLine("Фамилия {0}\t Средний балл {1,4:f2}", cl[i].famile, cl[i].sred);
+        for (int i = 0; i < cl.Length - 1; i++)
         {
-            new Student { Name = "Павел", Exam1 = 5, Exam2 = 4, Exam3 = 3, Exam4 = 5 },
-            new Student { Name = "Арсений", Exam1 = 4, Exam2 = 5, Exam3 = 4, Exam4 = 4 },
-            new Student { Name = "Артур", Exam1 = 3, Exam2 = 3, Exam3 = 4, Exam4 = 5 },
-            new Student { Name = "Игорь", Exam1 = 5, Exam2 = 5, Exam3 = 5, Exam4 = 5 },
-            new Student { Name = "Александр", Exam1 = 4, Exam2 = 5, Exam3 = 5, Exam4 = 4 }
-        };
-
-        List<Student> highScoringStudents = new List<Student>();
-
-        foreach (var student in students)
-        {
-            student.AverageGrade = (student.Exam1 + student.Exam2 + student.Exam3 + student.Exam4) / 4.0;
-            if (student.AverageGrade >= 4)
+            double amax = cl[i].sred;
+            int imax = i;
+            for (int j = i + 1; j < cl.Length; j++)
             {
-                highScoringStudents.Add(student);
+                if (cl[j].sred > amax)
+                {
+                    amax = cl[j].sred;
+                    imax = j;
+
+                }
+
             }
+            Struct1 temp;
+            temp = cl[imax];
+            cl[imax] = cl[i];
+            cl[i] = temp;
+
         }
-
-        highScoringStudents.Sort((s1, s2) => s2.AverageGrade.CompareTo(s1.AverageGrade));
-
-        Console.WriteLine("Студенты с средним баллом 4 и выше:");
-        Console.WriteLine("------------------------------------------------");
-        Console.WriteLine("|    Имя    | Экзамен 1 | Экзамен 2 | Экзамен 3 | Экзамен 4 | Ср. Балл |");
-        Console.WriteLine("------------------------------------------------");
-        foreach (var student in highScoringStudents)
+        Console.WriteLine();
+        for (int i = 0; i < cl.Length; i++)
         {
-            Console.WriteLine($"| {student.Name,-9} | {student.Exam1,9} | {student.Exam2,9} | {student.Exam3,9} | {student.Exam4,9} | {student.AverageGrade,8:f2} |");
+            if (cl[i].sred >= 4)
+                Console.WriteLine("Фамилия {0}\t " + "Средний балл {1,4:f2}", cl[i].famile, cl[i].sred);
+
         }
-        Console.WriteLine("------------------------------------------------");
     }
 }
