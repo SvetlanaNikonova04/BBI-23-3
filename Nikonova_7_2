@@ -1,0 +1,52 @@
+﻿public abstract class Person
+{
+    private string _firstName;
+    private string _lastName;
+
+    public Person(string firstName, string lastName)
+    {
+        _firstName = firstName;
+        _lastName = lastName;
+    }
+
+    public abstract void Print();
+}
+
+public class Student : Person
+{
+    private double _averageScore;
+    private int _studentId;
+
+    public Student(string firstName, string lastName, double averageScore, int studentId) : base(firstName, lastName)
+    {
+        _averageScore = averageScore;
+        _studentId = studentId;
+    }
+
+    public override void Print()
+    {
+        Console.WriteLine($"{_firstName} {_lastName}: {_averageScore}, {_studentId}");
+    }
+}
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        List<Person> people = new List<Person>()
+        {
+            new Student("Иван", "Иванов", 4.5, 12345),
+            new Student("Петр", "Петров", 3.8, 54321),
+            new Student("Мария", "Сидорова", 4.2, 23456),
+            new Student("Ольга", "Кузнецова", 4.0, 34567),
+            new Student("Сергей", "Соколов", 4.5, 45678)
+        };
+
+        Console.WriteLine("|{0,-15}|{1,-15}|{2,-10}|", "ФИО", "№ студ. билета", "Средний балл");
+        Console.WriteLine("--------------------------------------------");
+        foreach (var person in people)
+        {
+            person.Print();
+        }
+    }
+}
